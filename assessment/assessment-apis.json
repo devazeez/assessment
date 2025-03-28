@@ -38,7 +38,6 @@
 									"    pm.expect(message).to.equal(\"User successfully signed up\")",
 									");",
 									"",
-									"",
 									"pm.test(\"All required fields are present and valid\", () => {",
 									"    pm.expect(fullName).to.be.a(\"string\").that.is.not.empty;",
 									"    pm.expect(emailAddress).to.be.a(\"string\").that.includes(\"@\");",
@@ -67,7 +66,6 @@
 									"pm.environment.set('baseUrl', 'https://api.heatwave.ng./api')",
 									"",
 									"function generateRandom8DigitNumber() {",
-									"    // Generate a random number between 10000000 and 99999999",
 									"    const random8DigitNumber = Math.floor(10000000 + Math.random() * 90000000);",
 									"    return random8DigitNumber",
 									"",
@@ -75,7 +73,6 @@
 									"",
 									"let phoneNumber = \"090\" + generateRandom8DigitNumber()",
 									"pm.environment.set(\"phoneNumber\", phoneNumber)",
-									"console.log(phoneNumber)",
 									""
 								],
 								"type": "text/javascript",
