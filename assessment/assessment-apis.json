@@ -38,6 +38,7 @@
 									"    pm.expect(message).to.equal(\"User successfully signed up\")",
 									");",
 									"",
+									"",
 									"pm.test(\"All required fields are present and valid\", () => {",
 									"    pm.expect(fullName).to.be.a(\"string\").that.is.not.empty;",
 									"    pm.expect(emailAddress).to.be.a(\"string\").that.includes(\"@\");",
@@ -125,6 +126,7 @@
 									"pm.test(\"Error message is correct for empty fullName\", () => {",
 									"    pm.expect(message).to.equal(\"fullName can not be empty\");",
 									"});",
+									"",
 									""
 								],
 								"type": "text/javascript",
@@ -198,6 +200,7 @@
 									"pm.test(\"Error message is correct for empty fullName\", () => {",
 									"    pm.expect(message).to.equal(\"emailAddress can not be empty\");",
 									"});",
+									"",
 									""
 								],
 								"type": "text/javascript",
@@ -271,6 +274,7 @@
 									"pm.test(\"Error message is correct for empty fullName\", () => {",
 									"    pm.expect(message).to.equal(\"password can not be empty\");",
 									"});",
+									"",
 									""
 								],
 								"type": "text/javascript",
