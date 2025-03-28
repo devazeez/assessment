@@ -327,6 +327,80 @@
 						"url": "{{baseUrl}}/auth/signup"
 					},
 					"response": []
+				},
+				{
+					"name": "Signup - Empty Password Field Copy",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"id": "8f327262-4a76-41b7-8c18-d505576e1f59",
+								"exec": [
+									"const { message } = pm.response.json();",
+									"",
+									"pm.test(\"Response status is 400 for empty fullName\", () =>",
+									"    pm.response.to.have.status(400)",
+									");",
+									"",
+									"pm.test(\"Error message is correct for empty fullName\", () => {",
+									"    pm.expect(message).to.equal(\"phoneNumber can not be empty\");",
+									"});",
+									"",
+									""
+								],
+								"type": "text/javascript",
+								"packages": {}
+							}
+						},
+						{
+							"listen": "prerequest",
+							"script": {
+								"id": "e575058b-f27a-435d-be3c-755e6bb7b79a",
+								"exec": [
+									"pm.environment.set('baseUrl', 'https://api.heatwave.ng./api')",
+									"",
+									"function generateRandom8DigitNumber() {",
+									"    // Generate a random number between 10000000 and 99999999",
+									"    const random8DigitNumber = Math.floor(10000000 + Math.random() * 90000000);",
+									"    return random8DigitNumber",
+									"",
+									"}",
+									"",
+									"let phoneNumber = \"090\" + generateRandom8DigitNumber()",
+									"pm.environment.set(\"phoneNumber\", phoneNumber)",
+									"console.log(phoneNumber)",
+									""
+								],
+								"type": "text/javascript",
+								"packages": {}
+							}
+						}
+					],
+					"id": "f38bedad-b0ac-46e3-a161-fa1325bfae36",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "x-request-source",
+								"value": "customer",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"fullName\": \"{{$randomFullName}}\",\n    \"emailAddress\": \"{{$randomEmail}}\",\n    \"password\": \"Password12@@\",\n    \"phoneNumber\": \"\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": "{{baseUrl}}/auth/signup"
+					},
+					"response": []
 				}
 			],
 			"id": "166c431b-f5ec-4ba2-ad73-3fabfa0165e5"
