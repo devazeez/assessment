@@ -1,0 +1,611 @@
+{
+	"info": {
+		"_postman_id": "b1521dcd-b79f-4985-8ea5-c6c4fa225e59",
+		"name": "Assessment",
+		"schema": "https://schema.getpostman.com/json/collection/v2.0.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "Signup",
+			"item": [
+				{
+					"name": "Signup - Valid Request",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"id": "8f327262-4a76-41b7-8c18-d505576e1f59",
+								"exec": [
+									"const {",
+									"    message,",
+									"    data: {",
+									"        fullName,",
+									"        emailAddress,",
+									"        status,",
+									"        phoneNumber,",
+									"        role,",
+									"        orders,",
+									"        _id,",
+									"        cart,",
+									"        createdAt,",
+									"        updatedAt,",
+									"    },",
+									"} = pm.response.json();",
+									"",
+									"pm.test(\"Response status is 200\", () => pm.response.to.have.status(200));",
+									"",
+									"pm.test(\"Response message is correct\", () =>",
+									"    pm.expect(message).to.equal(\"User successfully signed up\")",
+									");",
+									"",
+									"pm.test(\"All required fields are present and valid\", () => {",
+									"    pm.expect(fullName).to.be.a(\"string\").that.is.not.empty;",
+									"    pm.expect(emailAddress).to.be.a(\"string\").that.includes(\"@\");",
+									"    pm.expect(status).to.be.a(\"string\").that.is.not.empty;",
+									"    pm.expect(phoneNumber).to.be.a(\"string\").that.is.not.empty;",
+									"    pm.expect(role).to.be.a(\"string\").that.is.not.empty;",
+									"    pm.expect(_id).to.be.a(\"string\").that.is.not.empty;",
+									"    pm.expect(orders).to.be.an(\"array\");",
+									"    pm.expect(cart).to.be.an(\"array\");",
+									"    pm.expect(createdAt).to.be.a(\"string\").that.includes(\"T\");",
+									"    pm.expect(updatedAt).to.be.a(\"string\").that.includes(\"T\");",
+									"});",
+									"",
+									"pm.environment.set(\"userEmailAddress\", emailAddress);",
+									""
+								],
+								"type": "text/javascript",
+								"packages": {}
+							}
+						},
+						{
+							"listen": "prerequest",
+							"script": {
+								"id": "e575058b-f27a-435d-be3c-755e6bb7b79a",
+								"exec": [
+									"pm.environment.set('baseUrl', 'https://api.heatwave.ng./api')",
+									"",
+									"function generateRandom8DigitNumber() {",
+									"    // Generate a random number between 10000000 and 99999999",
+									"    const random8DigitNumber = Math.floor(10000000 + Math.random() * 90000000);",
+									"    return random8DigitNumber",
+									"",
+									"}",
+									"",
+									"let phoneNumber = \"090\" + generateRandom8DigitNumber()",
+									"pm.environment.set(\"phoneNumber\", phoneNumber)",
+									"console.log(phoneNumber)",
+									""
+								],
+								"type": "text/javascript",
+								"packages": {}
+							}
+						}
+					],
+					"id": "d2e385dc-5cd4-40b1-9fca-93118e4433ef",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "x-request-source",
+								"value": "customer",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"fullName\": \"{{$randomFullName}}\",\n    \"emailAddress\": \"{{$randomEmail}}\",\n    \"password\": \"Password12@@\",\n    \"phoneNumber\": \"{{phoneNumber}}\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": "{{baseUrl}}/auth/signup"
+					},
+					"response": []
+				},
+				{
+					"name": "Signup - Empty FullName Field",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"id": "8f327262-4a76-41b7-8c18-d505576e1f59",
+								"exec": [
+									"const { message } = pm.response.json();",
+									"",
+									"pm.test(\"Response status is 400 for empty fullName\", () =>",
+									"    pm.response.to.have.status(400)",
+									");",
+									"",
+									"pm.test(\"Error message is correct for empty fullName\", () => {",
+									"    pm.expect(message).to.equal(\"fullName can not be empty\");",
+									"});",
+									""
+								],
+								"type": "text/javascript",
+								"packages": {}
+							}
+						},
+						{
+							"listen": "prerequest",
+							"script": {
+								"id": "e575058b-f27a-435d-be3c-755e6bb7b79a",
+								"exec": [
+									"pm.environment.set('baseUrl', 'https://api.heatwave.ng./api')",
+									"",
+									"function generateRandom8DigitNumber() {",
+									"    // Generate a random number between 10000000 and 99999999",
+									"    const random8DigitNumber = Math.floor(10000000 + Math.random() * 90000000);",
+									"    return random8DigitNumber",
+									"",
+									"}",
+									"",
+									"let phoneNumber = \"090\" + generateRandom8DigitNumber()",
+									"pm.environment.set(\"phoneNumber\", phoneNumber)",
+									"console.log(phoneNumber)",
+									""
+								],
+								"type": "text/javascript",
+								"packages": {}
+							}
+						}
+					],
+					"id": "99a0808e-b105-4945-b143-f67f36cce354",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "x-request-source",
+								"value": "customer",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"fullName\": \"\",\n    \"emailAddress\": \"\",\n    \"password\": \"\",\n    \"phoneNumber\": \"\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": "{{baseUrl}}/auth/signup"
+					},
+					"response": []
+				},
+				{
+					"name": "Signup - Empty Email Address Field",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"id": "8f327262-4a76-41b7-8c18-d505576e1f59",
+								"exec": [
+									"const { message } = pm.response.json();",
+									"",
+									"pm.test(\"Response status is 400 for empty fullName\", () =>",
+									"    pm.response.to.have.status(400)",
+									");",
+									"",
+									"pm.test(\"Error message is correct for empty fullName\", () => {",
+									"    pm.expect(message).to.equal(\"emailAddress can not be empty\");",
+									"});",
+									""
+								],
+								"type": "text/javascript",
+								"packages": {}
+							}
+						},
+						{
+							"listen": "prerequest",
+							"script": {
+								"id": "e575058b-f27a-435d-be3c-755e6bb7b79a",
+								"exec": [
+									"pm.environment.set('baseUrl', 'https://api.heatwave.ng./api')",
+									"",
+									"function generateRandom8DigitNumber() {",
+									"    // Generate a random number between 10000000 and 99999999",
+									"    const random8DigitNumber = Math.floor(10000000 + Math.random() * 90000000);",
+									"    return random8DigitNumber",
+									"",
+									"}",
+									"",
+									"let phoneNumber = \"090\" + generateRandom8DigitNumber()",
+									"pm.environment.set(\"phoneNumber\", phoneNumber)",
+									"console.log(phoneNumber)",
+									""
+								],
+								"type": "text/javascript",
+								"packages": {}
+							}
+						}
+					],
+					"id": "28110372-3cac-4937-9ca6-d710ab35ddf7",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "x-request-source",
+								"value": "customer",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"fullName\": \"{{$randomFullName}}\",\n    \"emailAddress\": \"\",\n    \"password\": \"Password12@@\",\n    \"phoneNumber\": \"{{phoneNumber}}\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": "{{baseUrl}}/auth/signup"
+					},
+					"response": []
+				},
+				{
+					"name": "Signup - Empty Password Field",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"id": "8f327262-4a76-41b7-8c18-d505576e1f59",
+								"exec": [
+									"const { message } = pm.response.json();",
+									"",
+									"pm.test(\"Response status is 400 for empty fullName\", () =>",
+									"    pm.response.to.have.status(400)",
+									");",
+									"",
+									"pm.test(\"Error message is correct for empty fullName\", () => {",
+									"    pm.expect(message).to.equal(\"password can not be empty\");",
+									"});",
+									""
+								],
+								"type": "text/javascript",
+								"packages": {}
+							}
+						},
+						{
+							"listen": "prerequest",
+							"script": {
+								"id": "e575058b-f27a-435d-be3c-755e6bb7b79a",
+								"exec": [
+									"pm.environment.set('baseUrl', 'https://api.heatwave.ng./api')",
+									"",
+									"function generateRandom8DigitNumber() {",
+									"    // Generate a random number between 10000000 and 99999999",
+									"    const random8DigitNumber = Math.floor(10000000 + Math.random() * 90000000);",
+									"    return random8DigitNumber",
+									"",
+									"}",
+									"",
+									"let phoneNumber = \"090\" + generateRandom8DigitNumber()",
+									"pm.environment.set(\"phoneNumber\", phoneNumber)",
+									"console.log(phoneNumber)",
+									""
+								],
+								"type": "text/javascript",
+								"packages": {}
+							}
+						}
+					],
+					"id": "383635db-1318-4140-9ba5-07d6e1b7e1fd",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "x-request-source",
+								"value": "customer",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"fullName\": \"{{$randomFullName}}\",\n    \"emailAddress\": \"{{$randomEmail}}\",\n    \"password\": \"\",\n    \"phoneNumber\": \"{{phoneNumber}}\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": "{{baseUrl}}/auth/signup"
+					},
+					"response": []
+				}
+			],
+			"id": "166c431b-f5ec-4ba2-ad73-3fabfa0165e5"
+		},
+		{
+			"name": "Login",
+			"item": [
+				{
+					"name": "Login - Valid Requst",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"id": "27956a20-d014-4ccb-8a8d-dc1700c5025f",
+								"exec": [
+									"const {",
+									"    message,",
+									"    token,",
+									"    data: {",
+									"        _id,",
+									"        fullName,",
+									"        emailAddress,",
+									"        status,",
+									"        phoneNumber,",
+									"        role,",
+									"        orders,",
+									"        cart,",
+									"        createdAt,",
+									"        updatedAt,",
+									"    },",
+									"} = pm.response.json();",
+									"",
+									"pm.test(\"Response status is 200\", () => pm.response.to.have.status(200));",
+									"",
+									"pm.test(\"Response message is correct\", () =>",
+									"    pm.expect(message).to.equal(\"User logged in successfully\")",
+									");",
+									"",
+									"pm.test(\"Token is present and valid\", () => {",
+									"    pm.expect(token).to.be.a(\"string\").that.is.not.empty;",
+									"});",
+									"",
+									"pm.test(\"All required user fields are present and valid\", () => {",
+									"    pm.expect(_id).to.be.a(\"string\").that.is.not.empty;",
+									"    pm.expect(fullName).to.be.a(\"string\").that.is.not.empty;",
+									"    pm.expect(emailAddress).to.be.a(\"string\").that.includes(\"@\");",
+									"    pm.expect(status).to.be.a(\"string\").that.is.not.empty;",
+									"    pm.expect(phoneNumber).to.be.a(\"string\").that.is.not.empty;",
+									"    pm.expect(role).to.be.a(\"string\").that.is.not.empty;",
+									"    pm.expect(orders).to.be.an(\"array\");",
+									"    pm.expect(cart).to.be.an(\"array\");",
+									"    pm.expect(createdAt).to.be.a(\"string\").that.includes(\"T\");",
+									"    pm.expect(updatedAt).to.be.a(\"string\").that.includes(\"T\");",
+									"});",
+									"",
+									"pm.environment.set(\"userAccessToken\", token);",
+									"pm.environment.set(\"userEmailAddress\", emailAddress);",
+									""
+								],
+								"type": "text/javascript",
+								"packages": {}
+							}
+						}
+					],
+					"id": "b2af5e75-358c-4f00-ad53-31087f579250",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"emailAddress\": \"{{userEmailAddress}}\",\n    \"password\": \"Password12@@\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": "{{baseUrl}}/auth/login"
+					},
+					"response": []
+				},
+				{
+					"name": "Login - Empty Email Field",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"id": "27956a20-d014-4ccb-8a8d-dc1700c5025f",
+								"exec": [
+									"const { message } = pm.response.json();",
+									"",
+									"pm.test(\"Response status is 400 for missing required fields\", () => pm.response.to.have.status(400));",
+									"",
+									"pm.test(\"Error message is correct for missing fields\", () => {",
+									"    const expectedMessages = [",
+									"        \"emailAddress can not be empty\",",
+									"        \"password can not be empty\"",
+									"    ];",
+									"    pm.expect(expectedMessages).to.include(message);",
+									"});",
+									""
+								],
+								"type": "text/javascript",
+								"packages": {}
+							}
+						}
+					],
+					"id": "1348b329-b69a-42a8-8640-47b582742e4c",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"emailAddress\": \"\",\n    \"password\": \"Password12@@\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": "{{baseUrl}}/auth/login"
+					},
+					"response": []
+				},
+				{
+					"name": "Login - Empty Password Field",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"id": "27956a20-d014-4ccb-8a8d-dc1700c5025f",
+								"exec": [
+									"const { message } = pm.response.json();",
+									"",
+									"pm.test(\"Response status is 400 for missing required fields\", () => pm.response.to.have.status(400));",
+									"",
+									"pm.test(\"Error message is correct for missing fields\", () => {",
+									"    const expectedMessages = [",
+									"        \"emailAddress can not be empty\",",
+									"        \"password can not be empty\"",
+									"    ];",
+									"    pm.expect(expectedMessages).to.include(message);",
+									"});",
+									""
+								],
+								"type": "text/javascript",
+								"packages": {}
+							}
+						}
+					],
+					"id": "e4f9b3b6-431c-4e2c-95f2-250caafe1c8a",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"emailAddress\": \"{{$randomEmail}}\",\n    \"password\": \"\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": "{{baseUrl}}/auth/login"
+					},
+					"response": []
+				}
+			],
+			"id": "8217c532-c7b3-4b41-ae8f-48fb68a29ba6"
+		},
+		{
+			"name": "Products",
+			"item": [
+				{
+					"name": "Get Products",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"id": "cf8f52ea-aaf3-413b-8d07-d3eed0db27e1",
+								"exec": [
+									"pm.test(\"Status code is 200\", function () {",
+									"    pm.response.to.have.status(200);",
+									"});",
+									"",
+									"pm.test(\"Response should contain a success message\", function () {",
+									"    const jsonData = pm.response.json();",
+									"    pm.expect(jsonData).to.have.property(\"message\", \"Products returned successfully\");",
+									"});",
+									"",
+									"pm.test(\"Response should contain a data array\", function () {",
+									"    const jsonData = pm.response.json();",
+									"    pm.expect(jsonData).to.have.property(\"data\").that.is.an(\"array\").with.length.above(0);",
+									"});",
+									"",
+									"pm.test(\"Each product should have required properties\", function () {",
+									"    const jsonData = pm.response.json();",
+									"    jsonData.data.forEach(product => {",
+									"        pm.expect(product).to.have.property(\"_id\").that.is.a(\"string\");",
+									"        pm.expect(product).to.have.property(\"name\").that.is.a(\"string\");",
+									"        pm.expect(product).to.have.property(\"description\").that.is.a(\"string\");",
+									"        pm.expect(product).to.have.property(\"status\").that.is.a(\"string\");",
+									"        pm.expect(product).to.have.property(\"slug\").that.is.a(\"string\");",
+									"        pm.expect(product).to.have.property(\"isLatestProduct\").that.is.a(\"boolean\");",
+									"        pm.expect(product).to.have.property(\"primaryImage\").that.is.a(\"string\");",
+									"        pm.expect(product).to.have.property(\"price\").that.is.a(\"number\");",
+									"        pm.expect(product).to.have.property(\"currency\").that.is.a(\"string\");",
+									"        pm.expect(product).to.have.property(\"categoryId\").that.is.a(\"string\");",
+									"        pm.expect(product).to.have.property(\"variants\").that.is.an(\"array\");",
+									"    });",
+									"});",
+									"",
+									"",
+									"pm.test(\"Each product variant should have required properties\", function () {",
+									"    const jsonData = pm.response.json();",
+									"    jsonData.data.forEach(product => {",
+									"        product.variants.forEach(variant => {",
+									"            pm.expect(variant).to.have.property(\"_id\").that.is.a(\"string\");",
+									"            pm.expect(variant).to.have.property(\"color\").that.is.a(\"string\");",
+									"            pm.expect(variant).to.have.property(\"size\").that.is.a(\"string\");",
+									"            pm.expect(variant).to.have.property(\"images\").that.is.an(\"array\");",
+									"            pm.expect(variant).to.have.property(\"isAvailable\").that.is.a(\"boolean\");",
+									"            pm.expect(variant).to.have.property(\"price\").that.is.a(\"number\");",
+									"        });",
+									"    });",
+									"});",
+									""
+								],
+								"type": "text/javascript",
+								"packages": {}
+							}
+						}
+					],
+					"id": "88236496-65c0-4c9d-a295-c8234c74d716",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": {
+								"token": "{{userAccessToken}}"
+							}
+						},
+						"method": "GET",
+						"header": [],
+						"body": {
+							"mode": "urlencoded",
+							"urlencoded": []
+						},
+						"url": {
+							"raw": "{{baseUrl}}/products",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"products"
+							],
+							"query": [
+								{
+									"key": "",
+									"value": null,
+									"disabled": true
+								}
+							]
+						}
+					},
+					"response": []
+				}
+			],
+			"id": "e6472581-068f-4eec-bf04-007e99a0942d"
+		}
+	]
+}
